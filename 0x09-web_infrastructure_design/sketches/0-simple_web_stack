@@ -1,8 +1,0 @@
-#!/usr/bin/python3
-
-import base64
-
-with open("https://drive.google.com/file/d/1O30juAdetqY2H3cP5ELTv0aY-dTMd5Qm/view?usp=sharing.png", "rb") as image_file:
-    base64_string = base64.b64encode(image_file.read()).decode('utf-8')
-
-print(base64_string)
