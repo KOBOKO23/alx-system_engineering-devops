@@ -27,8 +27,7 @@
       <p>To maintain a collection of organized information that can easily be accessed, managed and updated.</p>
       <p>What the server uses to communicate with the client (computer of the user requesting the website).
 	Communication between the client and the server occurs over the internet network through the TCP/IP protocol suite.</p>
-      </ul>
-
+    </ul>
     <h4>Issues With This Infrastructure</h4>
 
     <ul>
