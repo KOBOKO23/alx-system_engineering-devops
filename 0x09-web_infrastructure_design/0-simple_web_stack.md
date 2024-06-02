@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple web stack</title>
 </head>
 <body>
     <h1>Simple web stack</h1>
