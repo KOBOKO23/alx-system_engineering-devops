@@ -31,12 +31,13 @@
     <h4>Issues With This Infrastructure</h4>
 
     <ul>
-      <li>There are multiple SPOF (Single Point Of Failure) in this infrastructure.</li>
+      <li>There are multiple SPOF (Single Point Of Failure) in this infrastructure.<li>
 	<p>For example, if the MySQL database server is down, the entire site would be down.</p>
-      <li>Downtime when maintenance needed.</li>
+      <li>Downtime when maintenance needed.<li>
       <p>When we need to run some maintenance checks on any component, they have to be put down or the server has to be turned off. Since there's only one server, the website would be experiencing a downtime.</p>
-      <li>Cannot scale if there's too much incoming traffic.</li>
-      <p>It would be hard to scale this infrastructure becauses one server contains the required components. The server can quickly run out of resources or slow down when it starts receiving a lot of requests.</p>
+      <li>Cannot scale if there's too much incoming traffic.<li>
+	<p>It would be hard to scale this infrastructure becauses one server contains the required components. The server can quickly run out of resources or slow down when it starts receiving a lot of requests.</p>
+	</ul>
       
 </body>
 </html>
