@@ -1,9 +1,14 @@
-file { '/home/ubuntu/.ssh/config':
-  ensure  => file,
-  owner   => 'ubuntu',
-  group   => 'ubuntu',
-  mode    => '0600',
-  content => "Host 100.26.217.251\n" +
-             "    IdentityFile ~/.ssh/school\n" +
-             "    PasswordAuthentication no\n",
+#  Config SSH config file for automated passwordless connection using Puppet
+
+include stdlib
+file_line { 'Turn off passwd auth':
+  path    => '/etc/ssh/ssh_config',
+  line    => '    PasswordAuthentication no',
+  replace => true,
+}
+
+file_line { 'Declare identity file':
+  path    => '/etc/ssh/ssh_config',
+  line    => '    IdentityFile ~/.ssh/school',
+  replace => true,
 }
