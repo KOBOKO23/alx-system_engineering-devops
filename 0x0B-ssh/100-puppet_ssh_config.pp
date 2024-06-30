@@ -1,10 +1,9 @@
-# Client configuration file (w/ Puppet)
-file_line { 'Identity file':
-  ensure => 'present',
-  path   => '/etc/ssh/ssh_config',
-  line   => '    IdentityFile ~/.ssh/school',
-}
-file_line { 'disable password login':
-    path    => '/etc/ssh/ssh_config',
-    line    => '    PasswordAuthentication no',
+file { '/home/ubuntu/.ssh/config':
+  ensure  => file,
+  owner   => 'ubuntu',
+  group   => 'ubuntu',
+  mode    => '0600',
+  content => "Host 100.26.217.251\n" +
+             "    IdentityFile ~/.ssh/school\n" +
+             "    PasswordAuthentication no\n",
 }
