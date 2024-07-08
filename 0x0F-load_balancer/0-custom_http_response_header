@@ -1,34 +1,40 @@
 #!/usr/bin/env bash
 # configures a new Ubuntu machine
 
-# Install nginx on web-01 server
+# Update package list and install Nginx
 apt-get -y update
 apt-get -y install nginx
 
-# Add custom response header to know the server name for debugging
+# Add a custom response header to know the server name for debugging
 HOST_NAME=$(hostname)
-HEADER="\\\n\tadd_header X-Served-By $HOST_NAME;\n"
-FIND=$(grep "X-Server-by" /etc/nginx/sites-available/default)
-if [[ -z $FIND ]]; then
-    sed -i "23i $HEADER" /etc/nginx/sites-available/default
+HEADER="add_header X-Served-By $HOST_NAME;"
+if ! grep -q "X-Served-By" /etc/nginx/sites-available/default; then
+    sed -i "server { a $HEADER" /etc/nginx/sites-available/default
 fi
 
-# Create a firts index.html page
+# Create a basic index.html page
 echo "Hello World!" > /var/www/html/index.html
 
-# Add to the nginx configuration file a redirection to another page
-FIND=$(grep "redirect_me" /etc/nginx/sites-available/default)
-STRING="\\\n\tlocation /redirect_me {\n\t\t return 301 https://www.youtube.com/watch?v=3MbaGJN2ioQ;\n\t}\n"
-if [[ -z $FIND ]]; then
-    sed -i "42i $STRING" /etc/nginx/sites-available/default
+# Add a redirection to another page
+if ! grep -q "redirect_me" /etc/nginx/sites-available/default; then
+    sed -i "/server {/a \    location /redirect_me {\n        return 301 https://www.youtube.com/watch?v=3MbaGJN2ioQ;\n    }" /etc/nginx/sites-available/default
 fi
 
-# Add to the nginx configuration file a error page 404
-FIND=$(grep "error_page 404" /etc/nginx/sites-available/default)
-ERROR="\\\n\terror_page 404 /custom_404.html;\n"
-if [[ -z $FIND ]]; then
+# Add a custom 404 error page
+if ! grep -q "error_page 404" /etc/nginx/sites-available/default; then
     echo "Ceci n'est pas une page" > /var/www/html/custom_404.html
-    sed -i "40i $ERROR" /etc/nginx/sites-available/default
+    sed -i "/server {/a \    error_page 404 /custom_404.html;" /etc/nginx/sites-available/default
 fi
 
-service nginx restart
+# Check Nginx configuration for validity
+nginx -t
+if [ $? -eq 0 ]; then
+    # Restart Nginx to apply the changes
+    systemctl restart nginx
+else
+    echo "Nginx configuration is invalid."
+fi
+
+# Ensure Nginx is enabled to start on boot
+systemctl enable nginx
+
