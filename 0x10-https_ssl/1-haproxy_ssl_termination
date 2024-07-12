@@ -41,7 +41,7 @@ frontend koboko-frontend
         default_backend koboko-backend
 
 frontend koboko-frontend-https
-        bind *:443 ssl crt /etc/haproxy/certs/koboko.tech.pem
+        bind *:443 ssl crt /etc/haproxy/certs/www.koboko.tech.pem
         http-request set-header X-Forwarded-Proto https
         default_backend koboko-backend
 
