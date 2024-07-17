@@ -1,0 +1,99 @@
+/* Define a color palette */
+:root {
+    --primary-color: #2c3e50;  /* Dark Blue */
+    --secondary-color: #ecf0f1; /* Light Grey */
+    --accent-color: #e74c3c;    /* Red */
+    --text-color: #2c3e50;      /* Dark Blue */
+    --background-color: #ecf0f1; /* Light Grey */
+    --header-background-color: #3498db; /* Bright Blue */
+    --header-text-color: #ffffff; /* White */
+    --section-background-color: #ffffff; /* White */
+    --section-border-color: #bdc3c7; /* Grey */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: var(--section-background-color);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    text-align: center;
+    padding-bottom: 20px;
+    background-color: var(--header-background-color);
+    color: var(--header-text-color);
+    padding: 20px;
+    border-radius: 8px 8px 0 0;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+article {
+    padding: 10px;
+}
+
+section {
+    margin-bottom: 20px;
+    background-color: var(--section-background-color);
+    border: 1px solid var(--section-border-color);
+    border-radius: 8px;
+    padding: 15px;
+}
+
+section h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+section p {
+    margin: 0 0 10px;
+}
+
+section ul {
+    list-style-type: disc;
+    margin: 10px 0 0 20px;
+    padding: 0;
+    color: var(--primary-color);
+}
+
+section ul ul {
+    list-style-type: circle;
+}
+
+strong {
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+/* Add some hover effects for interactivity */
+section h2:hover {
+    color: var(--accent-color);
+    cursor: pointer;
+}
+
+/* Add styles for links */
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}

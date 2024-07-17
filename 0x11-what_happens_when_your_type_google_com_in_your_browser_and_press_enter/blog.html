@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Happens When You Type https://www.google.com</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>What Happens When You Type https://www.google.com in Your Browser and Press Enter</h1>
+        </header>
+        <article>
+            <section id="dns-request">
+                <h2>1. DNS Request</h2>
+                <p>
+                    The first step involves the Domain Name System (DNS), which translates human-readable domain names into IP addresses.
+                </p>
+                <ul>
+                    <li><strong>Browser Cache:</strong> Your browser checks its cache for a recently stored IP address for www.google.com.</li>
+                    <li><strong>Operating System Cache:</strong> If not found in the browser cache, the operating system’s DNS cache is checked.</li>
+                    <li><strong>Router Cache:</strong> The request then goes to the router, which may also have a DNS cache.</li>
+                    <li><strong>ISP DNS Server:</strong> If the IP address is not cached locally, the request goes to your Internet Service Provider’s DNS server. If this server doesn’t have the information, it queries other DNS servers in a hierarchical manner, starting from the root DNS servers, then TLD (Top Level Domain) servers, and finally authoritative DNS servers.</li>
+                    <li><strong>DNS Response:</strong> The DNS server eventually returns the IP address for www.google.com, such as 172.217.16.196.</li>
+                </ul>
+            </section>
+            <section id="tcp-ip">
+                <h2>2. TCP/IP</h2>
+                <p>
+                    Once the IP address is obtained, the browser establishes a connection to the server using TCP/IP.
+                </p>
+                <ul>
+                    <li><strong>IP Routing:</strong> The IP address is used to route packets through the internet, passing through various intermediate routers and networks.</li>
+                    <li><strong>TCP Handshake:</strong> The browser and server perform a three-way handshake to establish a reliable connection:
+                        <ul>
+                            <li><strong>SYN:</strong> The browser sends a SYN (synchronize) packet to the server.</li>
+                            <li><strong>SYN-ACK:</strong> The server responds with a SYN-ACK (synchronize-acknowledge) packet.</li>
+                            <li><strong>ACK:</strong> The browser sends an ACK (acknowledge) packet back to the server, completing the handshake.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+            <section id="firewall">
+                <h2>3. Firewall</h2>
+                <p>
+                    Firewalls at various points in the network (your device, your ISP, Google's data centers) inspect the packets for security.
+                </p>
+                <ul>
+                    <li><strong>Packet Filtering:</strong> Firewalls analyze packet headers to ensure they meet security criteria, blocking any suspicious traffic.</li>
+                    <li><strong>Stateful Inspection:</strong> Advanced firewalls track the state of active connections and make decisions based on the context of traffic.</li>
+                </ul>
+            </section>
+            <section id="https-ssl">
+                <h2>4. HTTPS/SSL</h2>
+                <p>
+                    To secure the communication, HTTPS (HyperText Transfer Protocol Secure) is used, which involves SSL/TLS (Secure Sockets Layer/Transport Layer Security) protocols.
+                </p>
+                <ul>
+                    <li><strong>SSL/TLS Handshake:</strong>
+                        <ul>
+                            <li><strong>Client Hello:</strong> The browser sends a "Client Hello" message to the server, including supported cryptographic algorithms.</li>
+                            <li><strong>Server Hello:</strong> The server responds with a "Server Hello," selecting the encryption algorithm and sending its SSL certificate.</li>
+                            <li><strong>Certificate Verification:</strong> The browser verifies the server’s certificate against a list of trusted Certificate Authorities (CAs).</li>
+                            <li><strong>Key Exchange:</strong> The browser and server exchange keys securely to establish an encrypted session.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+            <section id="load-balancer">
+                <h2>5. Load Balancer</h2>
+                <p>
+                    Google uses load balancers to distribute incoming requests across multiple servers to ensure efficient handling and high availability.
+                </p>
+                <ul>
+                    <li><strong>Load Balancing Algorithms:</strong> Algorithms like Round Robin, Least Connections, or IP Hash distribute the traffic.</li>
+                    <li><strong>Session Persistence:</strong> Ensures that requests from the same user are sent to the same server to maintain session state.</li>
+                </ul>
+            </section>
+            <section id="web-server">
+                <h2>6. Web Server</h2>
+                <p>
+                    The load balancer forwards the request to one of Google's web servers.
+                </p>
+                <ul>
+                    <li><strong>HTTP Request Handling:</strong> The web server receives the HTTP request, processes it, and determines the appropriate action.</li>
+                    <li><strong>Static Content:</strong> If the request is for static content (HTML, CSS, JS), the web server retrieves it from storage.</li>
+                </ul>
+            </section>
+            <section id="application-server">
+                <h2>7. Application Server</h2>
+                <p>
+                    For dynamic content, the web server forwards the request to an application server.
+                </p>
+                <ul>
+                    <li><strong>Request Processing:</strong> The application server executes the required business logic, which may include server-side scripting (e.g., Python, Node.js).</li>
+                    <li><strong>Data Fetching:</strong> If the request involves data retrieval or storage, the application server interacts with the database.</li>
+                </ul>
+            </section>
+            <section id="database">
+                <h2>8. Database</h2>
+                <p>
+                    The application server queries a database to fetch or update data.
+                </p>
+                <ul>
+                    <li><strong>SQL/NoSQL Queries:</strong> Depending on the database type (relational or NoSQL), appropriate queries are executed.</li>
+                    <li><strong>Database Response:</strong> The database processes the query and sends the results back to the application server.</li>
+                </ul>
+            </section>
+            <section id="response">
+                <h2>9. Back to the Web Server and Browser</h2>
+                <p>
+                    After processing the request, the application server returns the results to the web server.
+                </p>
+                <ul>
+                    <li><strong>Response Assembly:</strong> The application server processes the data and generates the dynamic content, returning it to the web server.</li>
+                    <li><strong>Response Sending:</strong> The web server sends the assembled response back to your browser.</li>
+                    <li><strong>HTTPS Decryption:</strong> Your browser decrypts the response using the session keys established during the SSL/TLS handshake.</li>
+                    <li><strong>Rendering:</strong> The browser parses the HTML, CSS, and JavaScript to render the webpage. It may make additional requests for resources like images or scripts, repeating parts of the process.</li>
+                </ul>
+            </section>
+        </article>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
