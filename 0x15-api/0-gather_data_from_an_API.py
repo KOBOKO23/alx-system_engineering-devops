@@ -1,44 +1,35 @@
 #!/usr/bin/python3
-""" Rest API script that gathers data from an API. """
-import json
+"""
+Returns to-do list information for a given employee ID.
+
+This script takes an employee ID as a command-line argument and fetches
+the corresponding user information and to-do list from the JSONPlaceholder API.
+It then prints the tasks completed by the employee.
+"""
+
+import requests
 import sys
-import urllib
-import urllib.request
 
-# The base API url for getting the employee object
-USER_API_URL = "https://jsonplaceholder.typicode.com/users/"
 
-# The base API url for getting all todo objects for an employee
-TODO_API_URL = "https://jsonplaceholder.typicode.com/todos?userId="
+if __name__ == "__main__":
+    # Base URL for the JSONPlaceholder API
+    url = "https://jsonplaceholder.typicode.com/"
 
-# Employee ID passed as an argument to the script
-emp_id: str = sys.argv[1] if len(sys.argv) > 1 else ""
+    # Get the employee information using the provided employee ID
+    employee_id = sys.argv[1]
+    user = requests.get(f"{url}users/{employee_id}").json()
 
-# Get all the todos for a given employee ID
-if emp_id.isdigit():
-    try:
-        user_url = f"{USER_API_URL}{emp_id}"
-        todos_url = f"{TODO_API_URL}{emp_id}"
+    # Get the to-do list for the employee using the provided employee ID
+    params = {"userId": employee_id}
+    todos = requests.get(f"{url}todos", params=params).json()
 
-        emp_response = urllib.request.urlopen(user_url)
-        todos_response = urllib.request.urlopen(todos_url)
+    # Filter completed tasks and count them
+    completed = [t.get("title") for t in todos if t.get("completed") is True]
 
-        emp_data = emp_response.read()
-        todos_data = todos_response.read()
+    # Print the employee's name and the number of completed tasks
+    print("Employee {} is done with tasks({}/{}):".format(
+        user.get("name"), len(completed), len(todos)))
 
-        employee = json.loads(emp_data)
-        todos = json.loads(todos_data)
-
-        name = employee.get("name")
-        done = len([todo for todo in todos if todo.get("completed")])
-        total = len(todos)
-
-        print(f"Employee {name} is done with tasks({done}/{total}):")
-        for todo in todos:
-            if todo.get("completed"):
-                print(f"\t {todo.get('title')}")
-
-    except urllib.error.URLError as err:
-        print(f"An error occurred: {err}")
-    except json.JSONDecodeError as err:
-        print(f"Error decoding JSON: {err}")
+    # Print the completed tasks one by one with indentation
+    for complete in completed:
+        print("\t {}".format(complete))
