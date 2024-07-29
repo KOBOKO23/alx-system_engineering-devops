@@ -8,7 +8,6 @@ returns information about his/her TODO list progress.
 from requests import get
 from sys import argv
 
-
 if __name__ == "__main__":
     response = get('https://jsonplaceholder.typicode.com/todos/')
     data = response.json()
@@ -30,8 +29,7 @@ if __name__ == "__main__":
                 completed += 1
                 tasks.append(i.get('title'))
 
-    print("Employee {} is done with tasks({}/{}):".format(employee, completed,
-                                                          total))
+    print("Employee {} is done with tasks({}/{}):".format(employee, completed, total))
 
     for i in tasks:
         print("\t {}".format(i))
